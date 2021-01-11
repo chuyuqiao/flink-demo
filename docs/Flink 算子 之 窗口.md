@@ -97,5 +97,6 @@ input
 ### 会话窗口
 
 ## 参考
-1. https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/stream/operators/windows.html
-2. https://blog.csdn.net/vincent_duan/article/details/102619887
+1. [Application Development DataStream API Operators Windows](https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/stream/operators/windows.html)
+2. [Flink countWindow窗口](https://blog.csdn.net/vincent_duan/article/details/102619887)
+3. [Flink流计算编程--看看别人怎么用Session Window](https://blog.csdn.net/lmalds/article/details/69267056)

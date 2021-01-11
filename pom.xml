@@ -166,6 +166,31 @@ under the License.
                         </configuration>
                     </execution>
 
+                    <!-- GroupedProcessingTimeWindowExample -->
+                    <execution>
+                        <id>SessionWindowing</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>SessionWindowing</classifier>
+
+                            <archive>
+                                <manifestEntries>
+                                    <program-class>me.yuqiao.demo.windowing.SessionWindowing</program-class>
+                                </manifestEntries>
+                            </archive>
+
+                            <includes>
+                                <include>me/yuqiao/demo/windowing/SessionWindowing.class</include>
+                                <include>me/yuqiao/demo/windowing/SessionWindowing*.class</include>
+                                <include>META-INF/LICENSE</include>
+                                <include>META-INF/NOTICE</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
 
@@ -182,6 +207,8 @@ under the License.
                                       tofile="${project.basedir}/target/WordCount.jar"/>
                                 <copy file="${project.basedir}/target/flink-demo_${scala.binary.version}-${project.version}-GroupedProcessingTimeWindowExample.jar"
                                       tofile="${project.basedir}/target/GroupedProcessingTimeWindowExample.jar"/>
+                                <copy file="${project.basedir}/target/flink-demo_${scala.binary.version}-${project.version}-SessionWindowing.jar"
+                                      tofile="${project.basedir}/target/SessionWindowing.jar"/>
                             </target>
                         </configuration>
                     </execution>
