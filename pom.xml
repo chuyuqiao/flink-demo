@@ -59,6 +59,13 @@ under the License.
             <scope>${flink.scope}</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-test-utils_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Add connector dependencies here. They must be in the default scope (compile). -->
 
         <!-- Example:
@@ -153,7 +160,8 @@ under the License.
 
                             <archive>
                                 <manifestEntries>
-                                    <program-class>me.yuqiao.demo.windowing.GroupedProcessingTimeWindowExample</program-class>
+                                    <program-class>me.yuqiao.demo.windowing.GroupedProcessingTimeWindowExample
+                                    </program-class>
                                 </manifestEntries>
                             </archive>
 
