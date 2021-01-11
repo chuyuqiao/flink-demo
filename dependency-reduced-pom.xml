@@ -144,6 +144,27 @@
               </includes>
             </configuration>
           </execution>
+          <execution>
+            <id>TopSpeedWindowing</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>TopSpeedWindowing</classifier>
+              <archive>
+                <manifestEntries>
+                  <program-class>me.yuqiao.demo.windowing.TopSpeedWindowing</program-class>
+                </manifestEntries>
+              </archive>
+              <includes>
+                <include>me/yuqiao/demo/windowing/TopSpeedWindowing.class</include>
+                <include>me/yuqiao/demo/windowing/TopSpeedWindowing*.class</include>
+                <include>META-INF/LICENSE</include>
+                <include>META-INF/NOTICE</include>
+              </includes>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -153,6 +174,7 @@
             <id>rename</id>
             <configuration>
               <target>
+                <copy />
                 <copy />
                 <copy />
                 <copy />

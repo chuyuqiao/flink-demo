@@ -95,6 +95,7 @@ input
 ```
 
 ### 会话窗口
+会话窗口分配器通过活动会话将元素分组。与滚动窗口和滑动窗口对比，会话窗口不会重叠并且没有固定的开始和结束时间。
 
 ## 参考
 1. [Application Development DataStream API Operators Windows](https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/stream/operators/windows.html)
