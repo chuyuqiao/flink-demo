@@ -141,6 +141,31 @@ under the License.
                         </configuration>
                     </execution>
 
+                    <!-- GroupedProcessingTimeWindowExample -->
+                    <execution>
+                        <id>GroupedProcessingTimeWindowExample</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>GroupedProcessingTimeWindowExample</classifier>
+
+                            <archive>
+                                <manifestEntries>
+                                    <program-class>me.yuqiao.demo.windowing.GroupedProcessingTimeWindowExample</program-class>
+                                </manifestEntries>
+                            </archive>
+
+                            <includes>
+                                <include>me/yuqiao/demo/windowing/GroupedProcessingTimeWindowExample.class</include>
+                                <include>me/yuqiao/demo/windowing/GroupedProcessingTimeWindowExample*.class</include>
+                                <include>META-INF/LICENSE</include>
+                                <include>META-INF/NOTICE</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
 
@@ -155,6 +180,8 @@ under the License.
                             <target>
                                 <copy file="${project.basedir}/target/flink-demo_${scala.binary.version}-${project.version}-WordCount.jar"
                                       tofile="${project.basedir}/target/WordCount.jar"/>
+                                <copy file="${project.basedir}/target/flink-demo_${scala.binary.version}-${project.version}-GroupedProcessingTimeWindowExample.jar"
+                                      tofile="${project.basedir}/target/GroupedProcessingTimeWindowExample.jar"/>
                             </target>
                         </configuration>
                     </execution>

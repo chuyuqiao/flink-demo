@@ -102,6 +102,27 @@
               </includes>
             </configuration>
           </execution>
+          <execution>
+            <id>GroupedProcessingTimeWindowExample</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>GroupedProcessingTimeWindowExample</classifier>
+              <archive>
+                <manifestEntries>
+                  <program-class>me.yuqiao.demo.windowing.GroupedProcessingTimeWindowExample</program-class>
+                </manifestEntries>
+              </archive>
+              <includes>
+                <include>me/yuqiao/demo/windowing/GroupedProcessingTimeWindowExample.class</include>
+                <include>me/yuqiao/demo/windowing/GroupedProcessingTimeWindowExample*.class</include>
+                <include>META-INF/LICENSE</include>
+                <include>META-INF/NOTICE</include>
+              </includes>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -111,6 +132,7 @@
             <id>rename</id>
             <configuration>
               <target>
+                <copy />
                 <copy />
               </target>
             </configuration>

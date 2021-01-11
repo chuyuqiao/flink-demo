@@ -70,7 +70,31 @@ input
 ```
 
 ### 滑动窗口
-滑动窗口分配器分配元素到固定长度的窗口。和滚动窗口类似，窗口的大小可以通过窗口大小参数指定，额外的可以通过滑动参数指定滑动的频率。因此
+滑动窗口分配器分配元素到固定长度的窗口。和滚动窗口类似，窗口的大小可以通过窗口大小参数指定，额外的可以通过滑动参数指定滑动的频率。
+因此滑动大小小于窗口大小窗口就会重叠。这种情况下，元素会分配给多个窗口。
+```
+DataStream<T> input = ...;
+
+// sliding event-time windows
+input
+    .keyBy(<key selector>)
+    .window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
+    .<windowed transformation>(<window function>);
+
+// sliding processing-time windows
+input
+    .keyBy(<key selector>)
+    .window(SlidingProcessingTimeWindows.of(Time.seconds(10), Time.seconds(5)))
+    .<windowed transformation>(<window function>);
+
+// sliding processing-time windows offset by -8 hours
+input
+    .keyBy(<key selector>)
+    .window(SlidingProcessingTimeWindows.of(Time.hours(12), Time.hours(1), Time.hours(-8)))
+    .<windowed transformation>(<window function>);
+```
+
+### 会话窗口
 
 ## 参考
 1. https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/stream/operators/windows.html
