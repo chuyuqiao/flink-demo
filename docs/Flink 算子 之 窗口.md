@@ -96,7 +96,53 @@ input
 
 ### 会话窗口
 会话窗口分配器通过活动会话将元素分组。与滚动窗口和滑动窗口对比，会话窗口不会重叠并且没有固定的开始和结束时间。
+```
+DataStream<T> input = ...;
 
+// event-time session windows with static gap
+input
+    .keyBy(<key selector>)
+    .window(EventTimeSessionWindows.withGap(Time.minutes(10)))
+    .<windowed transformation>(<window function>);
+    
+// event-time session windows with dynamic gap
+input
+    .keyBy(<key selector>)
+    .window(EventTimeSessionWindows.withDynamicGap((element) -> {
+        // determine and return session gap
+    }))
+    .<windowed transformation>(<window function>);
+
+// processing-time session windows with static gap
+input
+    .keyBy(<key selector>)
+    .window(ProcessingTimeSessionWindows.withGap(Time.minutes(10)))
+    .<windowed transformation>(<window function>);
+    
+// processing-time session windows with dynamic gap
+input
+    .keyBy(<key selector>)
+    .window(ProcessingTimeSessionWindows.withDynamicGap((element) -> {
+        // determine and return session gap
+    }))
+    .<windowed transformation>(<window function>);
+```
+
+### 全局窗口
+全局窗口分配器将所有元素以相同的key分配到单一的全局窗口。
+```
+DataStream<T> input = ...;
+
+input
+    .keyBy(<key selector>)
+    .window(GlobalWindows.create())
+    .<windowed transformation>(<window function>);
+```
+
+## 窗口函数
+### ReduceFunction
+### AggregateFunction
+### ProcessWindowFunction
 ## 参考
 1. [Application Development DataStream API Operators Windows](https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/stream/operators/windows.html)
 2. [Flink countWindow窗口](https://blog.csdn.net/vincent_duan/article/details/102619887)
