@@ -1,4 +1,4 @@
-package me.yuqiao.test;
+package me.yuqiao.demo;
 
 import me.yuqiao.demo.windowing.util.SessionWindowingData;
 import org.apache.flink.test.testdata.WordCountData;
