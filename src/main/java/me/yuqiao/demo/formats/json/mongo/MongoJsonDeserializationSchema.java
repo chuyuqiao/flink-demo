@@ -22,8 +22,8 @@ import me.yuqiao.demo.formats.json.mongo.MongoJsonDecodingFormat.ReadableMetadat
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.apache.flink.formats.common.TimestampFormat;
 import org.apache.flink.formats.json.JsonRowDataDeserializationSchema;
-import org.apache.flink.formats.json.TimestampFormat;
 import org.apache.flink.table.api.DataTypes;
 import org.apache.flink.table.data.ArrayData;
 import org.apache.flink.table.data.GenericRowData;
@@ -76,8 +76,7 @@ public final class MongoJsonDeserializationSchema implements DeserializationSche
     private final TypeInformation<RowData> producedTypeInfo;
 
     /** Only read changelogs from the specific database. */
-    private final @Nullable
-    String namespace;
+    private final @Nullable String namespace;
 
     /** Flag indicating whether to ignore invalid fields/rows (default: throw an exception). */
     private final boolean ignoreParseErrors;
@@ -195,7 +194,7 @@ public final class MongoJsonDeserializationSchema implements DeserializationSche
                 ArrayData data = row.getArray(0);
                 GenericRowData insert = new GenericRowData(data.size());
                 for (int i = 0; i < data.size(); i++) {
-                    GenericRowData field = (GenericRowData)data.getRow(i, fieldCount);
+                    GenericRowData field = (GenericRowData) data.getRow(i, fieldCount);
                     insert.setField(i, field.getField(1));
                 }
                 insert.setRowKind(RowKind.INSERT);
@@ -212,7 +211,8 @@ public final class MongoJsonDeserializationSchema implements DeserializationSche
                 //     for (int f = 0; f < fieldCount; f++) {
                 //         if (before.isNullAt(f)) {
                 //             // not null fields in "old" (before) means the fields are changed
-                //             // null/empty fields in "old" (before) means the fields are not changed
+                //             // null/empty fields in "old" (before) means the fields are not
+                // changed
                 //             // so we just copy the not changed fields into before
                 //             before.setField(f, after.getField(f));
                 //         }

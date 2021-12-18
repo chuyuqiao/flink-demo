@@ -19,15 +19,11 @@
 package me.yuqiao.demo.formats.json.mongo;
 
 import org.apache.flink.api.common.serialization.SerializationSchema;
-import org.apache.flink.formats.json.JsonOptions;
+import org.apache.flink.formats.common.TimestampFormat;
+import org.apache.flink.formats.json.JsonFormatOptions;
 import org.apache.flink.formats.json.JsonRowDataSerializationSchema;
-import org.apache.flink.formats.json.TimestampFormat;
 import org.apache.flink.table.api.DataTypes;
-import org.apache.flink.table.data.ArrayData;
-import org.apache.flink.table.data.GenericArrayData;
-import org.apache.flink.table.data.GenericRowData;
-import org.apache.flink.table.data.RowData;
-import org.apache.flink.table.data.StringData;
+import org.apache.flink.table.data.*;
 import org.apache.flink.table.types.DataType;
 import org.apache.flink.table.types.logical.RowType;
 import org.apache.flink.types.RowKind;
@@ -57,14 +53,15 @@ public class MongoJsonSerializationSchema implements SerializationSchema<RowData
     public MongoJsonSerializationSchema(
             RowType rowType,
             TimestampFormat timestampFormat,
-            JsonOptions.MapNullKeyMode mapNullKeyMode,
+            JsonFormatOptions.MapNullKeyMode mapNullKeyMode,
             String mapNullKeyLiteral) {
         jsonSerializer =
                 new JsonRowDataSerializationSchema(
                         createJsonRowType(fromLogicalToDataType(rowType)),
                         timestampFormat,
                         mapNullKeyMode,
-                        mapNullKeyLiteral);
+                        mapNullKeyLiteral,
+                        false);
     }
 
     @Override
@@ -76,7 +73,7 @@ public class MongoJsonSerializationSchema implements SerializationSchema<RowData
     public byte[] serialize(RowData row) {
         try {
             StringData opType = rowKind2String(row.getRowKind());
-            ArrayData arrayData = new GenericArrayData(new RowData[]{row});
+            ArrayData arrayData = new GenericArrayData(new RowData[] {row});
             reuse.setField(0, arrayData);
             reuse.setField(1, opType);
             return jsonSerializer.serialize(reuse);
@@ -122,8 +119,8 @@ public class MongoJsonSerializationSchema implements SerializationSchema<RowData
         // can not support UPDATE_BEFORE,UPDATE_AFTER
         return (RowType)
                 DataTypes.ROW(
-                        DataTypes.FIELD("o", DataTypes.ARRAY(databaseSchema)),
-                        DataTypes.FIELD("op", DataTypes.STRING()))
+                                DataTypes.FIELD("o", DataTypes.ARRAY(databaseSchema)),
+                                DataTypes.FIELD("op", DataTypes.STRING()))
                         .getLogicalType();
     }
 }

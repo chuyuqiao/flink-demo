@@ -21,7 +21,7 @@ package me.yuqiao.demo.formats.json.mongo;
 import me.yuqiao.demo.formats.json.mongo.MongoJsonDeserializationSchema.MetadataConverter;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.formats.json.TimestampFormat;
+import org.apache.flink.formats.common.TimestampFormat;
 import org.apache.flink.table.api.DataTypes;
 import org.apache.flink.table.connector.ChangelogMode;
 import org.apache.flink.table.connector.format.DecodingFormat;
@@ -54,7 +54,6 @@ public class MongoJsonDecodingFormat implements DecodingFormat<DeserializationSc
     // Mongo-specific attributes
     // --------------------------------------------------------------------------------------------
 
-
     private final @Nullable String namespace;
 
     private final boolean ignoreParseErrors;
@@ -62,9 +61,7 @@ public class MongoJsonDecodingFormat implements DecodingFormat<DeserializationSc
     private final TimestampFormat timestampFormat;
 
     public MongoJsonDecodingFormat(
-            String namespace,
-            boolean ignoreParseErrors,
-            TimestampFormat timestampFormat) {
+            String namespace, boolean ignoreParseErrors, TimestampFormat timestampFormat) {
         this.namespace = namespace;
         this.ignoreParseErrors = ignoreParseErrors;
         this.timestampFormat = timestampFormat;
@@ -92,7 +89,7 @@ public class MongoJsonDecodingFormat implements DecodingFormat<DeserializationSc
         final TypeInformation<RowData> producedTypeInfo =
                 context.createTypeInformation(producedDataType);
         return MongoJsonDeserializationSchema.builder(
-                physicalDataType, readableMetadata, producedTypeInfo)
+                        physicalDataType, readableMetadata, producedTypeInfo)
                 .setNamespace(namespace)
                 .setIgnoreParseErrors(ignoreParseErrors)
                 .setTimestampFormat(timestampFormat)

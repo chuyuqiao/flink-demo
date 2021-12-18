@@ -22,8 +22,9 @@ import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.serialization.SerializationSchema;
 import org.apache.flink.configuration.ConfigOption;
 import org.apache.flink.configuration.ReadableConfig;
-import org.apache.flink.formats.json.JsonOptions;
-import org.apache.flink.formats.json.TimestampFormat;
+import org.apache.flink.formats.common.TimestampFormat;
+import org.apache.flink.formats.json.JsonFormatOptions;
+import org.apache.flink.formats.json.JsonFormatOptionsUtil;
 import org.apache.flink.formats.json.canal.CanalJsonSerializationSchema;
 import org.apache.flink.table.connector.ChangelogMode;
 import org.apache.flink.table.connector.format.DecodingFormat;
@@ -61,7 +62,8 @@ public class MongoJsonFormatFactory
 
         final String namespace = formatOptions.getOptional(NAMESPACE_INCLUDE).orElse(null);
         final boolean ignoreParseErrors = formatOptions.get(IGNORE_PARSE_ERRORS);
-        final TimestampFormat timestampFormat = JsonOptions.getTimestampFormat(formatOptions);
+        final TimestampFormat timestampFormat =
+                JsonFormatOptionsUtil.getTimestampFormat(formatOptions);
 
         return new MongoJsonDecodingFormat(namespace, ignoreParseErrors, timestampFormat);
     }
@@ -73,8 +75,9 @@ public class MongoJsonFormatFactory
         FactoryUtil.validateFactoryOptions(this, formatOptions);
         validateEncodingFormatOptions(formatOptions);
 
-        TimestampFormat timestampFormat = JsonOptions.getTimestampFormat(formatOptions);
-        JsonOptions.MapNullKeyMode mapNullKeyMode = JsonOptions.getMapNullKeyMode(formatOptions);
+        TimestampFormat timestampFormat = JsonFormatOptionsUtil.getTimestampFormat(formatOptions);
+        JsonFormatOptions.MapNullKeyMode mapNullKeyMode =
+                JsonFormatOptionsUtil.getMapNullKeyMode(formatOptions);
         String mapNullKeyLiteral = formatOptions.get(JSON_MAP_NULL_KEY_LITERAL);
 
         return new EncodingFormat<SerializationSchema<RowData>>() {
@@ -93,7 +96,7 @@ public class MongoJsonFormatFactory
                     DynamicTableSink.Context context, DataType consumedDataType) {
                 final RowType rowType = (RowType) consumedDataType.getLogicalType();
                 return new CanalJsonSerializationSchema(
-                        rowType, timestampFormat, mapNullKeyMode, mapNullKeyLiteral);
+                        rowType, timestampFormat, mapNullKeyMode, mapNullKeyLiteral, false);
             }
         };
     }

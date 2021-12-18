@@ -21,19 +21,22 @@ package me.yuqiao.demo.formats.json.mongo;
 import org.apache.flink.configuration.ConfigOption;
 import org.apache.flink.configuration.ConfigOptions;
 import org.apache.flink.configuration.ReadableConfig;
-import org.apache.flink.formats.json.JsonOptions;
+import org.apache.flink.formats.json.JsonFormatOptions;
+import org.apache.flink.formats.json.JsonFormatOptionsUtil;
 
 /** Option utils for mongo-json format. */
 public class MongoJsonOptions {
 
-    public static final ConfigOption<Boolean> IGNORE_PARSE_ERRORS = JsonOptions.IGNORE_PARSE_ERRORS;
+    public static final ConfigOption<Boolean> IGNORE_PARSE_ERRORS =
+            JsonFormatOptions.IGNORE_PARSE_ERRORS;
 
-    public static final ConfigOption<String> TIMESTAMP_FORMAT = JsonOptions.TIMESTAMP_FORMAT;
+    public static final ConfigOption<String> TIMESTAMP_FORMAT = JsonFormatOptions.TIMESTAMP_FORMAT;
 
-    public static final ConfigOption<String> JSON_MAP_NULL_KEY_MODE = JsonOptions.MAP_NULL_KEY_MODE;
+    public static final ConfigOption<String> JSON_MAP_NULL_KEY_MODE =
+            JsonFormatOptions.MAP_NULL_KEY_MODE;
 
     public static final ConfigOption<String> JSON_MAP_NULL_KEY_LITERAL =
-            JsonOptions.MAP_NULL_KEY_LITERAL;
+            JsonFormatOptions.MAP_NULL_KEY_LITERAL;
 
     public static final ConfigOption<String> NAMESPACE_INCLUDE =
             ConfigOptions.key("namespace.include")
@@ -48,11 +51,11 @@ public class MongoJsonOptions {
 
     /** Validator for canal decoding format. */
     public static void validateDecodingFormatOptions(ReadableConfig tableOptions) {
-        JsonOptions.validateDecodingFormatOptions(tableOptions);
+        JsonFormatOptionsUtil.validateDecodingFormatOptions(tableOptions);
     }
 
     /** Validator for canal encoding format. */
     public static void validateEncodingFormatOptions(ReadableConfig tableOptions) {
-        JsonOptions.validateEncodingFormatOptions(tableOptions);
+        JsonFormatOptionsUtil.validateEncodingFormatOptions(tableOptions);
     }
 }

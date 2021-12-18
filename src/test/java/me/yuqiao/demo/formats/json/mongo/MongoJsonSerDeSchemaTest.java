@@ -18,12 +18,9 @@
 
 package me.yuqiao.demo.formats.json.mongo;
 
-import org.apache.flink.formats.json.JsonOptions;
-import org.apache.flink.formats.json.TimestampFormat;
 import org.apache.flink.table.data.RowData;
 import org.apache.flink.table.runtime.typeutils.InternalTypeInfo;
 import org.apache.flink.table.types.DataType;
-import org.apache.flink.table.types.logical.RowType;
 import org.apache.flink.util.Collector;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,27 +41,22 @@ import java.util.stream.Collectors;
 import static org.apache.flink.table.api.DataTypes.*;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Tests for {@link MongoJsonSerializationSchema} and {@link MongoJsonDeserializationSchema}.
- */
+/** Tests for {@link MongoJsonSerializationSchema} and {@link MongoJsonDeserializationSchema}. */
 public class MongoJsonSerDeSchemaTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    @Rule public ExpectedException thrown = ExpectedException.none();
 
     private static final DataType PHYSICAL_DATA_TYPE =
-            ROW(
-                    FIELD("Name", STRING().notNull()),
-                    FIELD("Value", STRING()));
+            ROW(FIELD("Name", STRING().notNull()), FIELD("Value", STRING()));
 
     @Test
     public void testFilteringTables() throws Exception {
         List<String> lines = readLines("mongo-data-filter-table.txt");
         MongoJsonDeserializationSchema deserializationSchema =
                 MongoJsonDeserializationSchema.builder(
-                        PHYSICAL_DATA_TYPE,
-                        Collections.emptyList(),
-                        InternalTypeInfo.of(PHYSICAL_DATA_TYPE.getLogicalType()))
+                                PHYSICAL_DATA_TYPE,
+                                Collections.emptyList(),
+                                InternalTypeInfo.of(PHYSICAL_DATA_TYPE.getLogicalType()))
                         .setNamespace("mydb.product")
                         .build();
         runTest(lines, deserializationSchema);
@@ -77,9 +69,7 @@ public class MongoJsonSerDeSchemaTest {
             deserializationSchema.deserialize(line.getBytes(StandardCharsets.UTF_8), collector);
         }
 
-        List<String> expected =
-                Arrays.asList(
-                        "+I(1,123456789)");
+        List<String> expected = Arrays.asList("+I(1,123456789)");
         List<String> actual =
                 collector.list.stream().map(Object::toString).collect(Collectors.toList());
         assertEquals(expected, actual);
